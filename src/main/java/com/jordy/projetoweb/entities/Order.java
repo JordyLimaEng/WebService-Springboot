@@ -11,21 +11,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-@Table(name = "tb_order")//para evitar que dê choque com o SQL_ORDER
-public class Order implements Serializable{
+@Table(name = "tb_order") // para evitar que dê choque com o SQL_ORDER
+public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	private Instant moment;//datas
-	
-	@ManyToOne//associação muitos para um, um user vai ter varios orders
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+	private Instant moment;// datas
+
+	// jpa ja devolve os clients aninhados com os orders
+	// @JsonIgnore
+	@ManyToOne // associação muitos para um, um user vai ter varios orders
 	@JoinColumn(name = "client_id")
 	private User client;
-	
-	public Order() {}
+
+	public Order() {
+	}
 
 	public Order(Long id, Instant moment, User client) {
 		super();
@@ -82,6 +90,5 @@ public class Order implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
+
 }

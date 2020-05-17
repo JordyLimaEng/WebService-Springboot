@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity//para mostrar ao JPA o que usar na tradução dos objs em req do bd
 @Table(name = "tb_user")
 public class User implements Serializable {
@@ -24,6 +26,8 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 	
+	//jpa ja devolve os orders aninhados com o cliente que requisitou
+	@JsonIgnore// colocar o json ignore para não ficar em loop infinito, pois tem-se associação de mao dupla entre order e client
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
