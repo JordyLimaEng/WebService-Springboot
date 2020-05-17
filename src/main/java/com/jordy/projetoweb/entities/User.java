@@ -2,10 +2,18 @@ package com.jordy.projetoweb.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity//para mostrar ao JPA o que usar na tradução dos objs em req do bd
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;//como é numérica, é auto incrementada no bd, logo acrescentar annotation para o jpa
 	private String name;
 	private String email;
 	private String phone;
