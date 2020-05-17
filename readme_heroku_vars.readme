@@ -1,0 +1,9 @@
+postgres://atikilnprkchsw:29ce2d5bbc48a2b7b43758dbfdcd4c454244fb88a57f1dc66950e3ee047473f5@ec2-52-202-146-43.compute-1.amazonaws.com:5432/d78fl3s27l49f8
+
+##how to read the fields from the vars on heroku
+
+user : atikilnprkchsw
+pass : 29ce2d5bbc48a2b7b43758dbfdcd4c454244fb88a57f1dc66950e3ee047473f5
+server : ec2-52-202-146-43.compute-1.amazonaws.com
+port : 5432
+nameDb : d78fl3s27l49f8
