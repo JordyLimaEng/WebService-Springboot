@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.jordy.projetoweb.entities.User;
 import com.jordy.projetoweb.repositories.UserRepository;
+import com.jordy.projetoweb.services.exceptions.ResourceNotFoundException.ResourceNotFoundException;
 
 @Service// registra a classe como um serviço
 public class UserService {//camada de serviço
@@ -21,7 +22,7 @@ public class UserService {//camada de serviço
 	
 	public User findById(Long Id){
 		Optional<User> obj = repository.findById(Id);// vai imediatamente no banco de dados e trás o 
-		return obj.get();
+		return obj.orElseThrow(()->new ResourceNotFoundException(Id));
 	}
 	
 	public User insert(User obj) {
