@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.jordy.projetoweb.entities.Category;
 import com.jordy.projetoweb.entities.Order;
+import com.jordy.projetoweb.entities.OrderItem;
 import com.jordy.projetoweb.entities.Product;
 import com.jordy.projetoweb.entities.User;
 import com.jordy.projetoweb.entities.enums.OrderStatus;
 import com.jordy.projetoweb.repositories.CategoryRepository;
+import com.jordy.projetoweb.repositories.OrderItemRepository;
 import com.jordy.projetoweb.repositories.OrderRepository;
 import com.jordy.projetoweb.repositories.ProductRepository;
 import com.jordy.projetoweb.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override // tudo q tiver nesse método executa quando a aplicação rodar
 	public void run(String... args) throws Exception {
@@ -69,6 +74,15 @@ public class TestConfig implements CommandLineRunner {
 
 		userRepository.saveAll(Arrays.asList(u1, u2));// passa uma lista com objs e salva no bf
 		orderRepository.saveAll(Arrays.asList(o1,o2,o3));// passa uma lista de orders atrelados a clients
+		
+		
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
 	}
 
 }
