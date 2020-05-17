@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.jordy.projetoweb.entities.Category;
 import com.jordy.projetoweb.entities.Order;
 import com.jordy.projetoweb.entities.OrderItem;
+import com.jordy.projetoweb.entities.Payment;
 import com.jordy.projetoweb.entities.Product;
 import com.jordy.projetoweb.entities.User;
 import com.jordy.projetoweb.entities.enums.OrderStatus;
@@ -82,6 +83,14 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice()); 
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		//para salvar um obj com associacao 1para1, não chama o repository do proprio objeto... 
+		//faz associação de mão dupla em memoria
+		o1.setPayment(pay1);
+		//o jpa trata o salvamento.
+		
+		orderRepository.save(o1);
 		
 	}
 
