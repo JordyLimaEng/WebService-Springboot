@@ -20,7 +20,7 @@ public class UserService {//camada de serviço
 	}
 	
 	public User findById(Long Id){
-		Optional<User> obj = repository.findById(Id);
+		Optional<User> obj = repository.findById(Id);// vai imediatamente no banco de dados e trás o 
 		return obj.get();
 	}
 	
@@ -30,5 +30,17 @@ public class UserService {//camada de serviço
 	
 	public void delete(Long id) {
 		repository.deleteById(id);
+	}
+	
+	public User update(Long id, User obj) {
+		User entity = repository.getOne(id);// instancia um usuario, mas nao vai no jpa, trabalha e dps envia 
+		updateData(entity, obj);
+		return repository.save(entity);
+	}
+
+	private void updateData(User entity, User obj) {//nem todos é bom deixar alterar, como a senha...
+		entity.setName(obj.getName());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
 	}
 }
