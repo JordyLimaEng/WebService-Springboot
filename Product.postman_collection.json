@@ -1,0 +1,117 @@
+{
+	"info": {
+		"_postman_id": "55e45d89-3870-4000-9ca1-31f3d11fc30e",
+		"name": "Product.postman_collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Retornar todos os produtos cadastrados",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					]
+				},
+				"description": "É esperada uma requisição GET em http://localhost:8080/products que responde um JSON com todos os produtos cadastrados"
+			},
+			"response": []
+		},
+		{
+			"name": "Retornar produto por chave primária",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1"
+					]
+				},
+				"description": "É esperada uma requisição GET em http://localhost:8080/products/{id} com o id do produto requerido como parâmetro"
+			},
+			"response": []
+		},
+		{
+			"name": "Inserir um produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/2/Fone de Ouvido Sony",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"2",
+						"Fone de Ouvido Sony"
+					]
+				},
+				"description": "É esperada uma requisição POST em http://localhost:8080/products/{id_categoria}/{descricao} com o id da categoria do produto e a descricao do produto"
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar um produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/2/1/Monitor 144Hz",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"2",
+						"1",
+						"Monitor 144Hz"
+					]
+				},
+				"description": "É esperada uma requisição PUT em http://localhost:8080/products/{id_produto}/{id_nova_categoria}/{nova_descricao} "
+			},
+			"response": []
+		},
+		{
+			"name": "Remover um produto",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"3"
+					]
+				},
+				"description": "É esperada uma requisição em http://localhost:8080/products/{id_produto} com a id do produto a ser removido.\r\n\r\nPara verificar, enviar Get para http://localhost:8080/products"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
