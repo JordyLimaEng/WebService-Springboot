@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jordy.projetoweb.entities.Category;
 import com.jordy.projetoweb.services.CategoryService;
 
+//Controlador REST das requisições em /categories
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
@@ -19,12 +20,15 @@ public class CategoryResource {
 	@Autowired
 	private CategoryService service;
 	
-	@GetMapping//especifica que vai responder uma requisição GET em /users
-	public ResponseEntity<List<Category>> findAll(){//resonde uma lista de user
+	//SELECT ALL
+	@GetMapping
+	public ResponseEntity<List<Category>> findAll(){
 		List<Category> list = service.findAll(); 
-		return ResponseEntity.ok().body(list);//responde lista - via http ok
+		return ResponseEntity.ok().body(list);
 	}
 	
+	//SELECT by Id
+	//recebe como paramêtro o ID da categoria via URI e responde a categoria correspondente
 	@GetMapping(value = "/{Id}")
 	public ResponseEntity<Category> findById(@PathVariable Long Id){//@PathVariable é usado para dizer que vai receber o id via url
 		Category obj = service.findById(Id);

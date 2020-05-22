@@ -4,54 +4,47 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+//Implementação da classe Product, representando a organização dos dados na tabela produto no banco de dados H2
 
 @Entity
-@Table(name = "tb_product")
+@Table(name = "produto")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
+	//os annotations especificam que Id será a chave primária da tabela e auto incrementada
 	@Id
+	@Column(name = "Id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
-	private String name;
-	private String description;
-	private String imgUrl;
-	private Double price;
 
-	// usando Set aqui para garantir que nao ocorra q um produto tenha mais q uma
-	// categoria
-	//@Transient //usado para o jba nao interpretar
-	@ManyToMany//mapeamento para tabela de associações do sql
-	@JoinTable(name = "tb_product_category", 
-				joinColumns = @JoinColumn(name = "product_id"),//chave estrangeira prod
-				inverseJoinColumns = @JoinColumn(name = "category_id"))//chave estrangeira categoria
-	private Set<Category> categories = new HashSet<>();
+	//referencia para coluna id_categoria
+	@Column(name = "id_categoria")
+	private Long Id_categoria;
+
+	//referencia para coluna descricao
+	@Column(name = "descricao")
+	private String descricao;
 	
-	@OneToMany(mappedBy = "id.product")
-	private Set<OrderItem> items = new HashSet<>();
-	
+	//a relação implementada aqui foi de que vários produtos serão relacionados com várias categorias e organizados de acordo com produtos
+	@ManyToMany(mappedBy = "produtos")
+	private Set<Category> categorias = new HashSet<>();
+
 	public Product() {
 	}
 
-	// não coloca coleção em construtores
-	public Product(Long id, String name, String description, Double price, String imgUrl) {
+	public Product(Long id, Long id_categoria, String descricao) {
 		super();
 		Id = id;
-		this.name = name;
-		this.description = description;
-		this.imgUrl = imgUrl;
-		this.price = price;
+		Id_categoria = id_categoria;
+		this.descricao = descricao;
 	}
 
 	public Long getId() {
@@ -62,49 +55,24 @@ public class Product implements Serializable {
 		Id = id;
 	}
 
-	public String getName() {
-		return name;
+	public Long getId_categoria() {
+		return Id_categoria;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setId_categoria(Long id_categoria) {
+		Id_categoria = id_categoria;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
-
-	public Set<Category> getCategories() {
-		return categories;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-	
-	@JsonIgnore
-	public Set<Order> getOrders(){
-		Set<Order> set = new HashSet<>();
-		for(OrderItem x : items) {
-			set.add(x.getOrder());
-		}
-		return set;
+	public void setCategorias(Set<Category> categorias) {
+		this.categorias = categorias;
 	}
 
 	@Override
@@ -112,6 +80,8 @@ public class Product implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((Id == null) ? 0 : Id.hashCode());
+		result = prime * result + ((Id_categoria == null) ? 0 : Id_categoria.hashCode());
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		return result;
 	}
 
@@ -128,6 +98,16 @@ public class Product implements Serializable {
 			if (other.Id != null)
 				return false;
 		} else if (!Id.equals(other.Id))
+			return false;
+		if (Id_categoria == null) {
+			if (other.Id_categoria != null)
+				return false;
+		} else if (!Id_categoria.equals(other.Id_categoria))
+			return false;
+		if (descricao == null) {
+			if (other.descricao != null)
+				return false;
+		} else if (!descricao.equals(other.descricao))
 			return false;
 		return true;
 	}
